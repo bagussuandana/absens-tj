@@ -12,6 +12,9 @@ class NISController extends Controller
     }
     public function store(Request $request)
     {
+        $request->validate([
+            'nis' => ['required', 'numeric', 'digits:4'],
+        ]);
         dd($request->all());
     }
 }
