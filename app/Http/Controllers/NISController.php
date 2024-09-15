@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attendance;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class NISController extends Controller
@@ -15,6 +17,11 @@ class NISController extends Controller
         $request->validate([
             'nis' => ['required', 'numeric', 'digits:4'],
         ]);
-        dd($request->all());
+
+        $alredyRecord = Attendance::query()->whereHas('student', function($query) use($request){
+            $query->where('nis',$request->nis);
+
+        })->first();
+        dd($alredyRecord);
     }
 }
